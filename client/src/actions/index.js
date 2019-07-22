@@ -17,3 +17,20 @@ export const deleteItemAction = id => {
     dispatch({ type: "DELETE_ITEM", payload: data });
   };
 };
+
+export const addItemAction = name => {
+    return async dispatch => {
+        const response = await fetch("/api/items", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: name })
+          });
+          const data = await response.json();
+  
+      dispatch({ type: "ADD_ITEM", payload: data });
+    };
+  };
+

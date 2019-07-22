@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
-import {getItemAction,deleteItemAction} from '../actions/index'
+import {getItemAction,deleteItemAction,addItemAction} from '../actions/index'
 
 const ItemList = (props) => {
   
@@ -13,22 +13,12 @@ const ItemList = (props) => {
     props.deleteItemAction(id);
   };
   // // Add Item
-  // const addItem = async () => {
-  //   const name = prompt("Enter Item");
-  //   if (name) {
-  //     const response = await fetch("/api/items", {
-  //       method: "POST",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({ name: name })
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setItems([...items, { name: data.name }]);
-  //   }
-  // };
+  const addItem = async () => {
+    const name = prompt("Enter Item");
+    if (name) {
+      props.addItemAction(name)
+    }
+  };
 
   useEffect(() => {
     props.getItemAction();
@@ -39,7 +29,7 @@ const ItemList = (props) => {
       <Button
         color="dark"
         style={{ marginBottom: "2rem" }}
-        // onClick={() => addItem()}
+        onClick={() => addItem()}
       >
         Add Item
       </Button>
@@ -71,4 +61,4 @@ const mapStateToProps = state => {
   return state;
 };
 
-export default connect(mapStateToProps,{getItemAction,deleteItemAction})(ItemList);
+export default connect(mapStateToProps,{getItemAction,deleteItemAction,addItemAction})(ItemList);
