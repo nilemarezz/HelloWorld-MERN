@@ -6,6 +6,7 @@ const app = experss();
 
 // BodyParser MiddleWare
 app.use(bodyParser.json());
+
 // DB Connect
 mongoose
   .connect(
@@ -14,6 +15,11 @@ mongoose
   )
   .then(() => console.log("DB Connect..."))
   .catch(err => console.log(err));
+
+// Route
+const Items = require('./routes/api/Items')
+app.use('/api/items',Items);
+  
 // Listen Port
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server has Start at port ${5000}`));
