@@ -1,9 +1,10 @@
 import React from 'react'
-import  'bootstrap/dist/css/bootstrap/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from './NavBar'
 const App = () => {
     return (
         <div>
-            hello
+           <Navbar/>
         </div>
     )
 }
