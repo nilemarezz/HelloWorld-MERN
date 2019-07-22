@@ -1,45 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import uuid from "uuid";
 
 const ItemList = () => {
-  const [items, setItems] = useState([
-    { id: uuid(), name: "Egg" },
-    { id: uuid(), name: "Milk" },
-    { id: uuid(), name: "Water" },
-    { id: uuid(), name: "Steak" }
-  ]);
+  const [items, setItems] = useState([]);
 
-const delItem = id =>{
-    const filter = items.filter(item =>item.id !== id)
+  // GET Items
+  const fetchItems = async () => {
+    const response = await fetch("/api/items");
+    const data = await response.json();
+    setItems(data);
+  };
+  // DELETE Item
+  const delItem = async id => {
+    const response = await fetch(`/api/items/${id}`, {
+      method: "DELETE"
+    });
+    const data = await response.json();
+    const filter = items.filter(item => item._id !== data.id);
     setItems(filter);
-}
+  };
+  // Add Item
+  const addItem = async () => {
+    const name = prompt("Enter Item");
+    if (name) {
+      const response = await fetch("/api/items", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name })
+      });
+      const data = await response.json();
+      console.log(data);
+      setItems([...items, { name: data.name }]);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   return (
     <Container>
       <Button
         color="dark"
         style={{ marginBottom: "2rem" }}
-        onClick={() => {
-          const name = prompt("Enter Item");
-          if (name) {
-            setItems([...items, { id: uuid(), name: name }]);
-          }
-        }}
+        onClick={() => addItem()}
       >
         Add Item
       </Button>
       <ListGroup>
         <TransitionGroup className="item-list">
           {items.map(item => (
-            <CSSTransition key={item.id} timeout={500} classNames="fade">
+            <CSSTransition key={item._id} timeout={500} classNames="fade">
               <ListGroupItem>
                 <Button
                   className="remove-btn"
                   color="danger"
                   onClick={() => {
-                    delItem(item.id);
+                    delItem(item._id);
                   }}
                 >
                   &times;

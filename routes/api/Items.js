@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newItem = { name: req.body.name };
+    console.log(newItem)
     const items = await Item.create(newItem);
     res.json(items);
   } catch (err) {
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     await Item.findByIdAndDelete(req.params.id);
-    res.json({ success: true });
+    res.json({ success: true , id: req.params.id});
   } catch (err) {
     res.json({ success: false });
   }
