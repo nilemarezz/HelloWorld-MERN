@@ -18,6 +18,9 @@ mongoose
   .catch(err => console.log(err));
 
 // Route
+app.get('/', function(req, res){
+  res.redirect('/');
+});
 const Items = require('./routes/api/Items')
 app.use('/api/items',Items);
 
