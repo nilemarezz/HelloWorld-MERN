@@ -3,6 +3,7 @@ const experss = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = experss();
+const path = require('path');
 
 // BodyParser MiddleWare
 app.use(bodyParser.json());
@@ -19,6 +20,15 @@ mongoose
 // Route
 const Items = require('./routes/api/Items')
 app.use('/api/items',Items);
+
+// Serve saatic assets
+if(process.env.NODE_ENV === 'production'){
+  // Set folder
+  app.use(express.static('client/build'));
+  app.get('*', (req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
   
 // Listen Port
 const port = process.env.PORT || 5000;
