@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const experss = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 // DB Connect
 mongoose
   .connect(
-    process.env.DB_ADDRESS,
+    "mongodb+srv://nile:Password@cluster0-2xql0.mongodb.net/Items?retryWrites=true&w=majority",
     { useNewUrlParser: true }
   )
   .then(() => console.log("DB Connect..."))
@@ -26,7 +26,7 @@ if(process.env.NODE_ENV === 'production'){
   // Set folder
   app.use(express.static('client/build'));
   app.get('*', (req,res)=>{
-    res.sendFile(path.resolve(__dirname,'client','index.html'))
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
   })
 }
   
