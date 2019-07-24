@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
@@ -19,7 +19,7 @@ const ItemList = (props) => {
       props.addItemAction(name)
     }
   };
-
+ 
   useEffect(() => {
     props.getItemAction();
   }, []);
