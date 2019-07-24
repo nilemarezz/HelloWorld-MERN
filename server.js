@@ -22,8 +22,10 @@ mongoose
 
 const Items = require("./routes/api/Items");
 const Users = require("./routes/api/User");
+const Auth = require("./routes/api/Auth");
 app.use("/api/items", Items);
 app.use("/api/users", Users);
+app.use("/api/auth", Auth);
 
 // Serve saatic assets
 if (process.env.NODE_ENV === 'production') {

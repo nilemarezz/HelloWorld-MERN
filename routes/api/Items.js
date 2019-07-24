@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Item = require("../../models/Item");
 
+const auth = require('../../middleware/auth');
 router.get("/", async (req, res) => {
   try {
     const items = await Item.find();
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth ,async (req, res) => {
   try {
     const newItem = { name: req.body.name };
     console.log(newItem)
@@ -23,7 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth,async (req, res) => {
   try {
     await Item.findByIdAndDelete(req.params.id);
     res.json({ success: true , id: req.params.id});
