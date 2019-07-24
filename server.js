@@ -2,7 +2,7 @@
 require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
-
+const config = require('config')
 const app = express();
 const path = require("path");
 
@@ -12,7 +12,7 @@ app.use(express.json());
 // DB Connect
 mongoose
   .connect(
-   process.env.DB_ADDRESS,
+   config.get('DB_ADDRESS'),
     { useNewUrlParser: true , useCreateIndex:true}
   )
   .then(() => console.log("DB Connect..."))

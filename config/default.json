@@ -1,0 +1,4 @@
+{
+    "DB_ADDRESS":"mongodb+srv://nile:Password@cluster0-2xql0.mongodb.net/Items?retryWrites=true&w=majority",
+    "jwtSecret" : "mern_myjwtSecret"
+}

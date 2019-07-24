@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcryptjs')
-
+const config = require('config');
+const jwt = require('jsonwebtoken');
 const User = require("../../models/User");
 
 router.post("/", async (req, res) => {
@@ -19,7 +20,17 @@ router.post("/", async (req, res) => {
         if(err) throw err;
         const newUser = {name:name,email:email,password:hash};
         const user = await User.create(newUser);
-        res.json({user:user.name,id:user.id,email:user.email});
+
+        jwt.sign(
+          {id : user.id},
+          config.get('jwtSecret'),
+          {expiresIn:3600},
+          (err,token) =>{
+            if(err) throw err
+            res.json({token:token,user:user.name,id:user.id,email:user.email});
+          }
+        )
+        
       })
     })
   } catch (err) {console.log(err)}
