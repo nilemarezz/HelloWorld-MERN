@@ -6,7 +6,8 @@ export const getItems = (state=[],action) =>{
             console.log(action.payload.id)
             return state.filter(item => item._id !== action.payload.id)
         case 'ADD_ITEM':
-            return [...state, { name: action.payload.name }]
+            if(action.payload !== undefined){
+            return [...state, { name: action.payload.name }]}
         default: 
             return state;
     }
